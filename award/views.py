@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
 from .forms import AwardLetterForm
+from django.contrib.auth.decorators import login_required.
+
+from .email import send_welcome_email
 
 # Create your views here.
 
@@ -10,7 +13,8 @@ def awards(request):
     projects = Post.objects.all()
     return render(request, 'awards.html')
 
-from .email import send_welcome_email
+
+@login_required(login_url='/accounts/login/')
 def all_projects(request):
     award = Post.main()
     if request.method == 'POST':
