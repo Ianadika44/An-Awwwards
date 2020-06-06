@@ -1,0 +1,37 @@
+{%extends 'all-awards/base.html'%}
+
+{% block content %}
+{{block.super}}
+
+<div class="container">
+
+    <!-- Looping through news   -->
+    <div class="container-fluid">
+
+        <form  action="{%url 'major'%}" method="post">
+          {%csrf_token%}
+      
+          {% bootstrap_form letterForm layout='inline' %}
+          <input type="submit" value="Subscribe">
+        </form>
+      
+      </div>
+      
+    {% for award_item in award %}
+  
+    <div class="row">
+      <!-- displaying News articles -->
+      <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <h2 class="text-center"> {{ award_item.title }} </h2>
+      </div>
+  
+    </div>
+  
+    {% empty %}
+    <div class="row">
+      <h2 class="text-center">There No News Items</h2>
+    </div>
+    {% endfor %}
+  
+  </div>
+{% endblock %}
