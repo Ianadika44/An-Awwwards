@@ -1,0 +1,3 @@
+Hello {{name}}
+
+Welcome to the Awwward app You will find the most exciting information about the coders

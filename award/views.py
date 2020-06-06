@@ -10,7 +10,7 @@ def awards(request):
     projects = Post.objects.all()
     return render(request, 'awards.html')
 
-
+from .email import send_welcome_email
 def all_projects(request):
     award = Post.main()
     if request.method == 'POST':
