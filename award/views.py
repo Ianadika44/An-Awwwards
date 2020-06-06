@@ -2,8 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
 from .forms import AwardLetterForm
-from django.contrib.auth.decorators import login_required.
-
+from django.contrib.auth.decorators import login_required
 from .email import send_welcome_email
 
 # Create your views here.

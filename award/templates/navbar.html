@@ -1,18 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href='https://fonts.googleapis.com/css?family=Modern Antiqua' rel='stylesheet'>
 </head>
-<body>
-<nav class="navbar navbar-inverse" style="background-color:#EB8258">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="{% url 'awards' %}">The Awwwards</a>
-    </div>
-      <!-- Adding a search form  -->
-      <div class="col-sm-4 col-md-4 navbar-right">
+
+<body style="font-family: 'Modern Antiqua';font-size: 22px;">
+  <nav class="navbar navbar-inverse" style="background-color:#EB8258">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="{% url 'awards' %}" style="font-size: 40px; text-align: center;">The Awwwards</a>
+      </div>
+     
+      <div class="col-sm-6 col-md-6">
+        {% if user.is_authenticated %}
+        <ul>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button"
+              aria-expanded="false">Account
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <li>
+                <a href="/accounts/password/change">Change Password</a>
+              </li>
+              <li>
+                <a href="/logout">Logout</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        {% else %}
+        <li>
+          <a class='btn btn-default' href="/accounts/login">Login</a>
+        </li>
+
+        {% endif %}
+      </div>
+       <!-- Adding a search form  -->
+       <div class="col-sm-4 col-md-4">
 
         <form class="navbar-form" role="search" action="{% url 'search_results' %}">
 
@@ -26,7 +55,8 @@
         </form>
       </div>
       <!-- search form end -->
-  </div>
-</nav>
+    </div>
+  </nav>
 </body>
+
 </html>
