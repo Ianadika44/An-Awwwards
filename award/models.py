@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+from tinymce.models import HTMLField
 
 # Create your models here.
 
@@ -44,10 +46,10 @@ class categories(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=60)
-    post = models.TextField()
+    post = HTMLField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     categories = models.ManyToManyField(categories)
-    post_image = models.ImageField(upload_to='posts/')
+    post_image = models.ImageField(upload_to='posts/' , blank=True)
 
     def search_by_title(cls, search_term):
         award = cls.objects.filter(title__icontains=search_term)

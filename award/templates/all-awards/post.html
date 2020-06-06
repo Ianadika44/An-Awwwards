@@ -13,8 +13,11 @@
    </div>
 
    <div class="row">
-     <p>{{post.post}}</p>
-   </div>
+    {% autoescape on %}
+    {{post.post| safe}}
+   {% endautoescape %}
+
+  </div>
 
    <div class="row">
      <p>Posted by {{post.user.first_name}}</p>

@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
-from .forms import AwardLetterForm
+from .forms import AwardLetterForm,NewPostForm
 from django.contrib.auth.decorators import login_required
 from .email import send_welcome_email
+
 
 # Create your views here.
 
@@ -61,3 +62,17 @@ def search_results(request):
     else:
         message = "You haven't searched for any term"
         return render(request, 'all-awards/search.html', {"message": message})
+@login_required(login_url='/accounts/login/')
+def new_post(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = NewPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.User = current_user
+            Post.save()
+        return redirect('awards')
+
+    else:
+        form = NewPostForm()
+    return render(request, 'new_post.html', {"form": form})
