@@ -21,21 +21,26 @@ def all_projects(request):
         if form.is_valid():
             name = form.cleaned_data['your_name']
             email = form.cleaned_data['email']
-            recipient = AwardLetterRecipients(name = name,email =email)
+            recipient = AwardLetterRecipients(name=name, email=email)
             recipient.save()
             HttpResponseRedirect('major')
     else:
         form = AwardLetterForm()
-    return render(request, 'all-awards/major.html', { "award": award, "letterForm": form})
+    return render(request, 'all-awards/major.html', {"award": award, "letterForm": form})
 
     return render(request, 'all-awards/main.html',)
 
 
-def projects(request):
+def profile_info(request):
 
-    return render(request, 'all-awards/major.html',)
+    current_user = request_user
+    profile_user = Profile.objects.filter(user=current_user).first()
+    projects = request.user.post.all()
+
+    return render(request, 'all-awards/profile.html', {"projects": projects, "profile": profile_info, "current_user": current_user})
 
 
+@login_required(login_url='/accounts/login/')
 def post(request, post_id):
     try:
         post = Post.objects.get(id=post_id)
