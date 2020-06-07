@@ -37,6 +37,7 @@ def profile_info(request):
     current_user = request_user
     profile_user = Profile.objects.filter(user=current_user).first()
     projects = request.user.post.all()
+    
 
     return render(request, 'all-awards/profile.html', {"projects": projects, "profile": profile_info, "current_user": current_user})
 
@@ -62,6 +63,8 @@ def search_results(request):
     else:
         message = "You haven't searched for any term"
         return render(request, 'all-awards/search.html', {"message": message})
+    
+    
 @login_required(login_url='/accounts/login/')
 def new_post(request):
     current_user = request.user
@@ -70,7 +73,7 @@ def new_post(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.User = current_user
-            Post.save()
+            post.save
         return redirect('awards')
 
     else:

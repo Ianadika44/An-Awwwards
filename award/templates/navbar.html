@@ -15,12 +15,12 @@
         <a class="navbar-brand" href="{% url 'awards' %}" style="font-size: 40px; text-align: center;">The Awwwards</a>
       </div>
      
-      <div class="col-sm-6 col-md-6">
+      <div class="col-sm-6 col-md-6" style="text-align: right;">
         {% if user.is_authenticated %}
-        <ul>
-          <li class="dropdown">
+        <ul style="text-align: right;"> 
+          <li class="dropdown" style="text-align: right;">
             <a href="#" class="dropdown-toggle btn btn-default" data-toggle="dropdown" role="button"
-              aria-expanded="false">Account
+              aria-expanded="false" style="text-align: right;">Account
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu" role="menu">
@@ -46,14 +46,15 @@
         {% endif %}
       </div>
        <!-- Adding a search form  -->
-       <div class="col-sm-4 col-md-4">
+       <div class="col-sm-4 col-md-4" style="text-align: right;">
 
-        <form class="navbar-form" role="search" action="{% url 'search_results' %}">
+        <form class="navbar-form" role="search" action="{% url 'search_results' %}" style="text-align: right;">
 
           <div class="input-group">
             <input type="text" class="form-control" placeholder="Search Post" name="post">
             <div class="input-group-btn">
-              <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+              <button type="submit" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+              
             </div>
           </div>
 
