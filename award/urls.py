@@ -13,7 +13,8 @@ urlpatterns=[
     url(r'^new/post$', views.new_post, name='new-post'),
     url(r'^profile/',views.profile, name='profile'),
     url(r'^user/(?P<username>\w{0,50})',views.user_profile,name='user-profile'),
-     url(r'^ajax/awardletter/$', views.awardletter, name='awardletter')
+    url(r'^ajax/awardletter/$', views.awardletter, name='awardletter'),
+    url(r'^api/merch/$', views.MerchList.as_view())
     
 ]
 if settings.DEBUG:

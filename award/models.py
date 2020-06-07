@@ -59,3 +59,8 @@ class Post(models.Model):
 class AwardLetterRecipients(models.Model):
     name = models.CharField(max_length=30)
     email = models.EmailField()
+
+class Rating(models.Model):
+    user = models.ForeignKey(User)
+    post = models.ForeignKey(Post)
+    review = models.CharField(max_length=200)
