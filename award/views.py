@@ -4,6 +4,7 @@ from .models import *
 from .forms import AwardLetterForm, NewPostForm
 from django.contrib.auth.decorators import login_required
 from .email import send_welcome_email
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -141,3 +142,14 @@ def review_rating(request, id):
         form = ProjectRatingForm()
 
     return render(request, 'projects/rating.html', {'form': form, "project": current_project, "user": current_user})
+
+
+def awardletter(request):
+    name = request.POST.get('your_name')
+    email = request.POST.get('email')
+
+    recipient = AwardLetterRecipients(name=name, email=email)
+    recipient.save()
+    send_welcome_email(name, email)
+    data = {'success': 'You have been successfully added to mailing list'}
+    return JsonResponse(data)
