@@ -1,4 +1,7 @@
-{% load bootstrap4 %} {% load staticfiles %}
+ 
+{% load bootstrap4 %}
+{% load staticfiles %}
+
 <!DOCTYPE html>
 <html>
 
@@ -10,18 +13,27 @@
   {{form.media}}
 
 {% block styles %} {% bootstrap_css %}
-  <link rel="stylesheet" href="{% static 'css/baseaward.css' %}"> {% endblock %}
+  <link rel="stylesheet" href="{% static 'css/baseaward.css' %}">
+
+{% endblock %}
 
 </head>
 
 <body>
 
-  <form  action="{%url 'new-post'%}" method="post" enctype="multipart/form-data">
-    {%csrf_token%}
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <form action="{% url 'new-post'%}" method="post"  enctype="multipart/form-data">
 
-    {% bootstrap_form form%}
-    <input type="submit" class="btn btn-success btn-lg" value="Post">
-  </form>
+        {% csrf_token%}
+        {% bootstrap_form form %}
+        <div class="form-group text-center">
+          <input type="submit" class="btn btn-primary sign-up-button" value="Share">
+        </div>
+        <input type="hidden" name="next" value="{{next}}">
+      </form>
+    </div>
+  </div>
 
    {% block scripts %}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
