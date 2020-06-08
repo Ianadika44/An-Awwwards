@@ -18,7 +18,7 @@
 - use python3.6 manage.py runserver to run this application
 
 ## Projects link
-
+- https://awwward-deploy.herokuapp.com/
 
 ## Contact info
 - Email:adika19ian@gmail.com.
