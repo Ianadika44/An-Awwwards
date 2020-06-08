@@ -20,23 +20,106 @@
 <hr>
 
 <div class="header">
-  <h1 style="text-align: center;font-family:'Sancreek';font-size: 70px ; padding-top: 150px; background-image: url('https://bit.ly/2A9kx16');background-size: cover;height: 500px;">The Awwwards </h1>
+  <h1
+    style="text-align: center;font-family:'Sancreek';font-size: 70px ; padding-top: 150px; background-image: url('https://bit.ly/2A9kx16');background-size: cover;height: 500px;">
+    The Awwwards
+
+
+    <div class="projects">
+
+
+      <div class="row">
+        <div class="col-md-5"></div>
+        <div class="col-md-2"> <a href="{% url 'new-post'%}" class=" justify-content-center btn btn-sm  btn-info "
+            style="color: white; text-decoration: none; background-color:rgb(19, 46, 14) ;">Submit your Post!</a></div>
+        <div class="col-md-5"></div>
+      </div>
+
+
+      <div class="row">
+        <span class="col1 col-md-3"></span>
+        <span class="col2 col-md-3"></span>
+        <span class="col3 col-md-3"></span>
+        <span class="col4 col-md-3"></span>
+      </div>
+    </div>
+  </h1>
+
+
+
+
 </div>
+<div class="row">
+
+
+  <div class="col-md-4">
+    <div class="card mb-5 mt-5"
+      style="background-image: url('https://bit.ly/2YbBiRm'); background-size: cover; color: white;">
+      <div class="card-body">
+        <h5 class="card-title">picture-gallery</h5>
+        <p class="card-text">a lifestyle gallery that displays lifestyle images .</p>
+
+        <div class="col-md-2"> <a href="https://gallery-deploy.herokuapp.com/"
+            class=" justify-content-center btn btn-sm  btn-info " style="color: white; text-decoration: none;">Link</a>
+        </div>
+
+
+
+      </div>
+    </div>
+    <div class="card mb-5 mt-5"
+      style="background-image: url('https://bit.ly/2MPsYBL'); background-size: cover; color: white;">
+      <div class="card-body">
+        <h5 class="card-title">My-quotes</h5>
+        <p class="card-text">ts an app that enables you to get your favorite app and author and moreso add a quote .</p>
+
+        <div class="col-md-2"> <a href="https://eager-torvalds-1bdb52.netlify.com/"
+            class=" justify-content-center btn btn-sm  btn-info " style="color: white; text-decoration: none;">Link</a>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card mb-5 mt-5"
+        style="background-image: url('https://bit.ly/2XIxIz0'); background-size: cover; color: white;">
+        <div class="card-body">
+          <h5 class="card-title">higlights</h5>
+          <p class="card-text">Its an app that highlights latest updates globally</p>
+
+          <div class="col-md-2"> <a href="https://highlight-deploy.herokuapp.com/"
+              class=" justify-content-center btn btn-sm  btn-info "
+              style="color: white; text-decoration: none;">Link</a>
+          </div>
+        </div>
 
 
 
 
+      </div>
 
+    </div>
+  </div>
+  
+
+</div>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"> </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-circle-progress/1.1.3/circle-progress.min.js"></script>
-
+<hr>
+<hr>
+<br>
 <!-- Looping through news end   -->
 <div class="container-fluid">
 
-  <form  action="{%url 'awards'%}" method="post">
+  <form action="{%url 'awards'%}" method="post">
     {%csrf_token%}
 
     {% bootstrap_form letterForm layout='inline' %}
@@ -46,8 +129,9 @@
 </div>
 
 
+
 {% endblock %}
 <!--End of the block content-->
 {% block scripts %} {{block.super}}
-  <script type="text/javascript" src="{%static 'js/awardletter.js'%}"></script>
+<script type="text/javascript" src="{%static 'js/awardletter.js'%}"></script>
 {% endblock %}

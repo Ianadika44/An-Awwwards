@@ -34,22 +34,21 @@ class User(models.Model):
         return profile
 
 
-class categories(models.Model):
-    categories = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.categories
-
-    def save_category(self):
-        self.save()
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=60)
-    post = HTMLField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    categories = models.ManyToManyField(categories)
-    post_image = models.ImageField(upload_to='posts/' , blank=True)
+    title = models.CharField(max_length=30)
+    description = HTMLField()
+    link = models.CharField(max_length=500)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    
+    def save_post(self):
+        self.save()
+
+    def delete_post(self):
+        self.delete()
+    
+    
 
     def search_by_title(cls, search_term):
         award = cls.objects.filter(title__icontains=search_term)

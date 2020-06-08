@@ -1,4 +1,3 @@
- 
 {% load bootstrap4 %}
 {% load staticfiles %}
 
@@ -24,6 +23,8 @@
   <div class="panel panel-default">
     <div class="panel-body">
       <form action="{% url 'new-post'%}" method="post"  enctype="multipart/form-data">
+
+        {% csrf_token%}
         {% bootstrap_form form %}
         <div class="form-group text-center">
           <input type="submit" class="btn btn-primary sign-up-button" value="Share">

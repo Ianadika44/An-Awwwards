@@ -1,90 +1,112 @@
  
-{% extends 'base.html' %}
-{% load bootstrap4 %}
-{% load static %}
-{% load staticfiles %}
-
-{% block styles%}
-{% bootstrap_css %}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-<link rel="stylesheet" href="{% static 'css/index.css' %}">
-{%endblock %}
-
+{%extends 'base.html'%}
+{% load mathfilters %}
 {% block content %}
+<div class="container mt-5 border-left border-right project-font">
+	<h1 class="text-center">{{ project.sitename }} by <span class="text-uppercase">{{ project.user }}</span></h1>
+	<hr style="width: 150px">
+	<div class="row mt-4">
+		<div class="col-md-6 border-right">
+			<div class="project-info p-5">
+				<h2 class="text-center font-weight-bold">ABOUT </h2>
+				<hr style="width: 80px">
+				<h5 class="mt-3 font-weight-bold">Description</h5>
+				{{ project.desc }}
+				<h5 class="mt-3 font-weight-bold">Categories</h5>
+				{{ project.categories }}
+				<h5 class="mt-3  font-weight-bold">Technologies</h5>
+				{{ project.technologies }}
+				<p class="text-muted mt-3"> Posted {{ project.post_date|timesince }} ago </p>
+			</div>
+			<div class="ml-5">
+				<h2 class="text-center font-weight-bold">IMAGES</h2>
+				<hr style="width: 80px">
+				<div id="myCarousel" class="carousel slide mt-5 mb-5" data-interval="3000" data-ride="carousel"
+				     style="width: 90%;">
+					<!-- Caheroku pg:push tribune DATABASE_URL --app mtr1bunerousel indicators -->
+					<ol class="carousel-indicators">
+						<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+						<li data-target="#myCarousel" data-slide-to="1"></li>
+						<li data-target="#myCarousel" data-slide-to="2"></li>
+					</ol>
+					<!-- Wrapper for carousel items -->
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							<img src="{{ project.image1.url }}" alt="First Slide" style="max-width: 100%;">
+							<div class="carousel-caption d-none d-md-block">
+								<h5>First Image</h5>
+								<p>{{ project.sitename }} by {{ project.user }}</p>
+							</div>
+						</div>
+						<div class="carousel-item">
+							<img src="{{ project.image2.url }}" alt="First Slide" style="max-width: 100%;">
+							<div class="carousel-caption d-none d-md-block">
+								<h5>Second Image</h5>
+								<p>{{ project.sitename }} by {{ project.user }}</p>
+							</div>
+						</div>
+						<div class="carousel-item">
+							<img src="{{ project.image3.url }}" alt="First Slide" style="max-width: 100%;">
+							<div class="carousel-caption d-none d-md-block">
+								<h5>Third Image</h5>
+								<p>{{ project.sitename }} by {{ project.user }}</p>
+							</div>
+						</div>
+					</div>
+					<!-- Carousel controls -->
+					<a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+						<span class="carousel-control-prev-icon"></span>
+					</a>
+					<a class="carousel-control-next" href="#myCarousel" data-slide="next">
+						<span class="carousel-control-next-icon"></span>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 text-center">
+			<h2 class="text-center mt-5 font-weight-bold">RATINGS</h2>
+			<hr style="width: 80px">
+			<a href="{% url 'review' project.id %}">
+				<button class="btn btn-lg btn-outline-info mt-3"> RATE</button>
+			</a>
+			{% if ratings %}
+			<div class="table-responsive">
+				<table class="table table-hover table-dark mt-5">
+					<thead>
+					<tr>
+						<th scope="col"><i class="feather-16 ml-5" data-feather="user"></i></th>
+						<th scope="col">Usability</th>
+						<th scope="col">Design</th>
+						<th scope="col">Content</th>
+						<th scope="col">Average</th>
+					</tr>
+					</thead>
+					<tbody>
+					{% for rating in ratings %}
+					<tr>
+						<th scope="row" class="toggle-review"><img class="img-responsive rounded-circle"
+						                                           src="{{rating.user.profile.image.url}}" height="30"
+						                                           width="30"><b class="ml-2">{{rating.user.username}}</b>
+						</th>
+						<td>{{rating.usability_rating}}</td>
+						<td>{{rating.design_rating}}</td>
+						<td>{{rating.content_rating}}</td>
+						<td>{{ rating.content_rating | add:rating.design_rating |add:rating.usability_rating|div:3|truncatechars:6}}
+						</td>
+					</tr>
+					<tr class="bg-dark">
+						<th scope="row" class="bg-dark"><span class="text-danger">Comment: </span></th>
+						<td colspan="4">{{ rating.review }}</td>
+					</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		{% else %}
+		<h5 class="text-center">No reviews yet. Be the first to review</h5>
+		{% endif %}
 
-<div class="text-center">
-<div class="profile-image">
-  <img src="{{profile.avatar.url}}" class="gallery-image" alt=""  width=30 height=30>
+	</div>
 </div>
-<p style="font-size: 22px; font-weight:bold;margin:auto; padding:2px;">{{profile.username}}</p>
-<p class="card-text" style="font-size:16px;font-weight:bold;">{{profile.description |safe}}</p>
-<p class="card-text" style="font-size:14px;color:maroon;font-weight:bold;">{{profile.email}}</p>
-
-</div>
-
-<hr>
-
-<div class="container headers">
-    <h4 style="float:left;"><span class="bold" >Projects</span>  Your projects</h4>
-    <!-- <h4 style="float:right"><span><span class="bold">Mobile Excellence</span>  Recognized by Google</span></h4> -->
-</div>
-<div class="pages">
-<div class="row">
-  {% for project in projects %}
-  <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-    <div class="card" style="width: 40.2rem;">
-  <img class="card-img-top img-responsive" src="}" alt="Card image cap" responsive>
-  <div class="card-body">
-    <a href="/site/{{project.id}}" style="color:black;text-decoration:none;">
-      <h5 class="card-title" style="line-height:28px;">{{project.title}}</h5>
-    </a>
-    <p class="card-text">From {{project.country}}<span class="date">{{project.post_date}}</span></p>
-  </div>
-</div>
-  </div>
-  {% endfor %}
-
-  <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-    <div class="card" style="width: 40.2rem;">
-  <img class="card-img-top img-responsive" src="{% static 'img/cocaine.png'%}" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title" style="line-height:28px;">Cocaine Route - Heart of Drugs</h5>
-    <p class="card-text">From Mexico <span class="date">November 10,2018</span></p>
-  </div>
-
-</div>
-  </div>
-
-  <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-    <div class="card" style="width: 40.2rem;">
-  <img class="card-img-top img-responsive" src="{% static 'img/test3.jpeg'%}" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title" style="line-height:28px;">Lessons in Life</h5>
-    <p class="card-text">From Kenya <span class="date">October 6,2018</span></p>
-  </div>
-
-
-</div>
-  </div>
-
-  <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-    <div class="card" style="width: 40.2rem;">
-  <img class="card-img-top img-responsive" src="{% static 'img/test2.jpeg'%}" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title" style="line-height:28px;">Whispers</h5>
-    <p class="card-text">From Paris <span class="date">September 26,2018</span></p>
-  </div>
-
-</div>
-  </div>
-</div>
-</div>
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"> </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-circle-progress/1.1.3/circle-progress.min.js"></script>
-
 {% endblock %}

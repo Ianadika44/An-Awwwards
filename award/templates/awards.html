@@ -4,6 +4,49 @@
 
 
 {% block content %}
+<div class="col-md-6 text-center">
+    <h2 class="text-center mt-5 font-weight-bold">RATINGS</h2>
+    <hr style="width: 80px">
+    <a href="{% url 'review' project.id %}">
+        <button class="btn btn-lg btn-outline-info mt-3"> RATE</button>
+    </a>
+    {% if ratings %}
+    <div class="table-responsive">
+        <table class="table table-hover table-dark mt-5">
+            <thead>
+            <tr>
+                <th scope="col"><i class="feather-16 ml-5" data-feather="user"></i></th>
+                <th scope="col">Usability</th>
+                <th scope="col">Design</th>
+                <th scope="col">Content</th>
+                <th scope="col">Average</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for rating in ratings %}
+            <tr>
+                <th scope="row" class="toggle-review"><img class="img-responsive rounded-circle"
+                                                           src="{{rating.user.profile.image.url}}" height="30"
+                                                           width="30"><b class="ml-2">{{rating.user.username}}</b>
+                </th>
+                <td>{{rating.usability_rating}}</td>
+                <td>{{rating.design_rating}}</td>
+                <td>{{rating.content_rating}}</td>
+                <td>{{ rating.content_rating | add:rating.design_rating |add:rating.usability_rating|div:3|truncatechars:6}}
+                </td>
+            </tr>
+            <tr class="bg-dark">
+                <th scope="row" class="bg-dark"><span class="text-danger">Comment: </span></th>
+                <td colspan="4">{{ rating.review }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<h5 class="text-center">No reviews yet. Be the first to review</h5>
+{% endif %}
 
 
 {{block.super}}
