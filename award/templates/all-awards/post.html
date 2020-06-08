@@ -15,7 +15,7 @@
    <div class="container-fluid">
 
     <form  action="{%url 'post'%}" method="post">
-      {%csrf_token%}
+      {%_token%}
   
       {% bootstrap_form letterForm layout='inline' %}
       <input type="submit" value="Subscribe">

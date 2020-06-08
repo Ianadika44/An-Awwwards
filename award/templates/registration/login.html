@@ -15,7 +15,7 @@
     <div class="col-md-4 form-section">
 
       {% if form.errors %}
-        <p>Password or Username is incorrect</p>
+      <p>Password or Username is incorrect</p>
       {% endif %}
 
       <div class="panel panel-default" style="margin-top:200px;">
@@ -23,25 +23,26 @@
         <div class="panel-body">
 
           <div class="text-center">
-          <form action="/accounts/login/" method="post">
-            
-            {% bootstrap_form form %}
+            <form action="/accounts/login/" method="post">
+              {%csrf_token%}
+              
+              {% bootstrap_form form %}
 
-            <div class="form-group">
-              <input type="submit" class="btn btn-primary login-button" value="Log in">
+              <div class="form-group">
+                <input type="submit" class="btn btn-primary login-button" value="Log in">
 
-            </div>
-            <input type="hidden" name="next" value="/">
+              </div>
+              <input type="hidden" name="next" value="/">
 
-          </form>
-        </div>
+            </form>
+          </div>
         </div>
 
       </div>
 
       <div class="panel panel-default">
         <div class="panel-body text-center">
-          <p> Don't have  an account? <span><a class="" href="/accounts/register">Sign Up</a></span></p>
+          <p> Don't have an account? <span><a class="" href="/accounts/register">Sign Up</a></span></p>
         </div>
       </div>
 
@@ -53,19 +54,23 @@
 </div>
 
 <style>
-.panel{
-  background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(../img/background.jpg) fixed;
-}
-p, label,a{
-  color:white;
-  font-size: 15px;
-}
-.panel-default{
-  border-color: inherit;
-}
-input{
-  text-align: center;
-}
+  .panel {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/background.jpg) fixed;
+  }
 
+  p,
+  label,
+  a {
+    color: white;
+    font-size: 15px;
+  }
+
+  .panel-default {
+    border-color: inherit;
+  }
+
+  input {
+    text-align: center;
+  }
 </style>
 {% endblock %}

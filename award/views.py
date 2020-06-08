@@ -24,12 +24,12 @@ def awards(request):
             email = form.cleaned_data['email']
             recipient = AwardLetterRecipients(name=name, email=email)
             recipient.save()
-            HttpResponseRedirect('major')
+            HttpResponseRedirect('main')
     else:
         form = AwardLetterForm()
     return render(request, 'all-awards/main.html', {"awards": awards, "letterForm": form})
 
-    return render(request, 'all-awards/major.html',)
+    return render(request, 'all-awards/main.html',)
 
 
 @login_required(login_url='/accounts/login/')
@@ -96,18 +96,6 @@ def new_post(request):
     else:
         form = NewPostForm()
     return render(request, 'new_post.html', {"form": form})
-
-
-
-
-def profile(request):
-    current_user = request.user
-    profile = Profile.objects.get(username=current_user)
-    projects = Project.objects.filter(username=current_user)
-
-    return render(request, 'profile.html', {"projects": projects, "profile": profile})
-
-
 
 def user_profile(request, username):
     user = User.objects.get(username=username)
@@ -187,16 +175,3 @@ class MerchDescription(APIView):
         merch.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
-
-def single_project(request, c_id):
-    current_user = request.user
-    current_project = Post.objects.get(id=c_id)
-    ratings = Rating.objects.filter(post_id=c_id)
-    usability = Rating.objects.filter(post_id=c_id).aggregate(Avg('usability_rating'))
-    content = Rating.objects.filter(post_id=c_id).aggregate(Avg('content_rating'))
-    design = Rating.objects.filter(post_id=c_id).aggregate(Avg('design_rating'))
-
-    return render(request, 'projects/project.html',
-                  {"project": current_project, "user": current_user, 'ratings': ratings, "design": design,
-                   "content": content, "usability": usability})
