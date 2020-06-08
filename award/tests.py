@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import User, Post, categories
+from .models import User, Post
 
 # Create your tests here.
 
