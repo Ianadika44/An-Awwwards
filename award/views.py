@@ -2,14 +2,16 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
 from .forms import AwardLetterForm, NewPostForm
+from .forms import ProjectUpload
 from django.contrib.auth.decorators import login_required
 from .email import send_welcome_email
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import  Rating
+from .models import Rating
 from .serializer import MerchSerializer
 from rest_framework import status
+from .permissions import IsAdminOrReadOnly
 
 
 # Create your views here.
@@ -97,7 +99,8 @@ def new_post(request):
     return render(request, 'new_post.html', {"form": form})
 
 
-@login_required(login_url='/accounts/login/')
+
+
 def profile(request):
     current_user = request.user
     profile = Profile.objects.get(username=current_user)
@@ -106,12 +109,11 @@ def profile(request):
     return render(request, 'profile.html', {"projects": projects, "profile": profile})
 
 
-@login_required(login_url='/accounts/login/')
+
 def user_profile(request, username):
     user = User.objects.get(username=username)
     profile = Profile.objects.get(username=user)
     projects = Project.objects.filter(username=user)
-
 
 
 def single_project(request, c_id):
@@ -159,15 +161,49 @@ def awardletter(request):
     data = {'success': 'You have been successfully added to mailing list'}
     return JsonResponse(data)
 
+
 class MerchList(APIView):
     def get(self, request, format=None):
         all_merch = Rating.objects.all()
         serializers = MerchSerializer(all_merch, many=True)
         return Response(serializers.data)
-    
+
     def post(self, request, format=None):
         serializers = MerchSerializer(data=request.data)
         if serializers.is_valid():
             serializers.save()
             return Response(serializers.data, status=status.HTTP_201_CREATED)
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+    permission_classes = (IsAdminOrReadOnly,)
+
+
+class MerchDescription(APIView):
+    permission_classes = (IsAdminOrReadOnly,)
+
+    def get_merch(self, pk):
+        try:
+            return Rating.objects.get(pk=pk)
+        except Rating.DoesNotExist:
+            return Http404
+
+    def get(self, request, pk, format=None):
+        merch = self.get_merch(pk)
+        serializers = MerchSerializer(merch)
+        return Response(serializers.data)
+
+    def put(self, request, pk, format=None):
+        merch = self.get_merch(pk)
+        serializers = MerchSerializer(merch, request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data)
+        else:
+            return Rewwsponse(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        merch = self.get_merch(pk)
+        merch.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+

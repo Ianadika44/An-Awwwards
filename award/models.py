@@ -63,4 +63,5 @@ class AwardLetterRecipients(models.Model):
 class Rating(models.Model):
     user = models.ForeignKey(User)
     post = models.ForeignKey(Post)
+    description = models.TextField()
     review = models.CharField(max_length=200)

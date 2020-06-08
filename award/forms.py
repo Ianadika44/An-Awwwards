@@ -14,3 +14,11 @@ class NewPostForm(forms.ModelForm):
         widgets = {
             'categories': forms.CheckboxSelectMultiple(),
         }
+class ProjectUpload(forms.ModelForm):
+    class Meta:
+        model = Post
+        exclude = ['user', 'post_date']
+        widgets = {
+            'tags': forms.CheckboxSelectMultiple(),
+        }
+        

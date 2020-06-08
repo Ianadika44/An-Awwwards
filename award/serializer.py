@@ -4,4 +4,4 @@ from .models import Rating
 class MerchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rating
-        fields = ('user', 'post', 'review')
+        fields = ('user', 'post', 'description','review')
